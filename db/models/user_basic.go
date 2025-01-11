@@ -24,3 +24,9 @@ type UserBasic struct {
 func CreateUser(user UserBasic) *gorm.DB {
 	return utils.MySQLDB.Create(&user)
 }
+
+func FindUserByName(name string) *UserBasic {
+	user := UserBasic{}
+	utils.MySQLDB.Where("name = ?", name).First(&user)
+	return &user
+}
