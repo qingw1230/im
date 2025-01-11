@@ -1,8 +1,6 @@
 package service
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +9,5 @@ import (
 // @Success 200 {string} pong
 // @Router /index [get]
 func GetIndex(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
-	})
+	c.HTML(200, "index.html", gin.H{})
 }
