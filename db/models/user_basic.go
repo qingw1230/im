@@ -1,6 +1,9 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"github.com/qingw1230/im/common/utils"
+	"gorm.io/gorm"
+)
 
 type UserBasic struct {
 	gorm.Model
@@ -16,4 +19,8 @@ type UserBasic struct {
 	HeartbeatTime uint64
 	IsLogout      bool
 	DeviceInfo    string
+}
+
+func CreateUser(user UserBasic) *gorm.DB {
+	return utils.MySQLDB.Create(&user)
 }
