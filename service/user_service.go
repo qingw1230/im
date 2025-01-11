@@ -1,10 +1,13 @@
 package service
 
 import (
+	"fmt"
+	"math/rand"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/qingw1230/im/db/models"
+	"github.com/qingw1230/im/common/db/models"
+	"github.com/qingw1230/im/common/utils"
 )
 
 // CreateUser
@@ -35,7 +38,10 @@ func CreateUser(c *gin.Context) {
 		})
 		return
 	}
-	user.Password = password
+
+	salt := fmt.Sprintf("%06d", rand.Int31())
+	user.Salt = salt
+	user.Password = utils.MakePassword(password, salt)
 	models.CreateUser(user)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "新增用户成功",

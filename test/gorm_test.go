@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"testing"
 
-	"github.com/qingw1230/im/db/models"
+	"github.com/qingw1230/im/common/db/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
