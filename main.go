@@ -10,6 +10,7 @@ func main() {
 	utils.InitConfig()
 	utils.InitMySQL()
 	db.LoadMySQLTable()
+	utils.InitRedis()
 
 	r := api.Router()
 	r.Run()

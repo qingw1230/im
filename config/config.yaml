@@ -1,3 +1,10 @@
 mysql:
   dsn1: root:qin1002.@tcp(127.0.0.1:13306)/?charset=utf8mb4&parseTime=True&loc=Local
   dsn: root:qin1002.@tcp(127.0.0.1:13306)/im?charset=utf8mb4&parseTime=True&loc=Local
+
+redis:
+  addr: "127.0.0.1:16379"
+  password: "qin1002."
+  DB: 0
+  poolSize: 100
+  minIdleConn: 100

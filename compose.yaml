@@ -9,3 +9,15 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: qin1002.
     restart: always
+
+  redis:
+    image: redis:5.0.7
+    container_name: redis
+    ports:
+      - "16379:6379"
+    environment:
+      TZ: Asia/Shanghai
+    restart: always
+    sysctls:
+      net.core.somaxconn: 1024
+    command: redis-server --requirepass qin1002. --appendonly yes
