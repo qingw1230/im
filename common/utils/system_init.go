@@ -3,10 +3,14 @@ package utils
 import (
 	"database/sql"
 	"fmt"
+	"log"
+	"os"
+	"time"
 
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var MySQLDB *gorm.DB
@@ -23,6 +27,15 @@ func InitConfig() {
 }
 
 func InitMySQL() {
+	newLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags),
+		logger.Config{
+			SlowThreshold: time.Second,
+			LogLevel:      logger.Info,
+			Colorful:      true,
+		},
+	)
+
 	sqlDB, err := sql.Open("mysql", viper.GetString("mysql.dsn1"))
 	if err != nil {
 		panic("failed to connect database")
@@ -35,7 +48,7 @@ func InitMySQL() {
 		panic("failed to create database")
 	}
 
-	db, err := gorm.Open(mysql.Open(viper.GetString("mysql.dsn")), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(viper.GetString("mysql.dsn")), &gorm.Config{Logger: newLogger})
 	if err != nil {
 		panic("failed to connect database")
 	}
