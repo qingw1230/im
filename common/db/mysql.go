@@ -7,4 +7,7 @@ import (
 
 func LoadMySQLTable() {
 	utils.MySQLDB.AutoMigrate(&models.UserBasic{})
+	utils.MySQLDB.AutoMigrate(&models.Message{})
+	utils.MySQLDB.AutoMigrate(&models.Contact{})
+	utils.MySQLDB.AutoMigrate(&models.GroupBasic{})
 }
