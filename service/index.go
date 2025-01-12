@@ -1,13 +1,23 @@
 package service
 
 import (
+	"html/template"
+
 	"github.com/gin-gonic/gin"
 )
 
-// GetIndex
-// @Tags 首页
-// @Success 200 {string} pong
-// @Router /index [get]
 func GetIndex(c *gin.Context) {
-	c.HTML(200, "index.html", gin.H{})
+	ind, err := template.ParseFiles("views/user/index.html")
+	if err != nil {
+		panic(err)
+	}
+	ind.Execute(c.Writer, nil)
+}
+
+func ToRegister(c *gin.Context) {
+	ind, err := template.ParseFiles("views/user/register.html")
+	if err != nil {
+		panic(err)
+	}
+	ind.Execute(c.Writer, nil)
 }

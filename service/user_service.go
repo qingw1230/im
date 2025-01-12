@@ -13,38 +13,41 @@ import (
 	"github.com/qingw1230/im/common/utils"
 )
 
-// CreateUser
-// @Summary 新增用户
-// @Tags 用户模块
-// @param name query string true "用户名"
-// @param password query string true "密码"
-// @param repassword query string true "确认密码"
-// @success 200 {string} json{"code", "message"}
-// @Router /user/createUser [get]
-func CreateUser(c *gin.Context) {
-	user := models.UserBasic{}
-	user.Name = c.Query("name")
-	password := c.Query("password")
-	repassword := c.Query("repassword")
+type paramsUserRegister struct {
+	Name       string `json:"name"`
+	Password   string `json:"password"`
+	RePassword string `json:"rePassword"`
+	Phone      string `json:"phone"`
+}
 
-	data := models.FindUserByName(user.Name)
-	if data.Name != "" {
+func UserRegister(c *gin.Context) {
+	params := paramsUserRegister{}
+	if err := c.BindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": err.Error()})
+		return
+	}
+
+	data := models.FindUserByPhone(params.Phone)
+	if data.Phone != "" {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "用户已注册",
 		})
 		return
 	}
 
-	if password != repassword {
+	if params.Password != params.RePassword {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "两次密码不一致!",
 		})
 		return
 	}
 
+	user := models.UserBasic{}
+	user.Name = params.Name
+	user.Phone = params.Phone
 	salt := fmt.Sprintf("%06d", rand.Int31())
 	user.Salt = salt
-	user.Password = utils.MakePassword(password, salt)
+	user.Password = utils.MakePassword(params.Password, salt)
 	models.CreateUser(user)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "新增用户成功",
@@ -56,7 +59,7 @@ type paramsUserLogin struct {
 	Password string `json:"password"`
 }
 
-func FindUserByNameAndPwd(c *gin.Context) {
+func UserLogin(c *gin.Context) {
 	params := paramsUserLogin{}
 	if err := c.BindJSON(&params); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": err.Error()})
