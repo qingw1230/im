@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -119,4 +120,13 @@ func MsgHandler(c *gin.Context, ws *websocket.Conn) {
 
 func SendUserMsg(c *gin.Context) {
 	models.Chat(c.Writer, c.Request)
+}
+
+func SearchFriends(c *gin.Context) {
+	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))
+	users := models.SearchFriend(uint(userId))
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"data": users,
+	})
 }
