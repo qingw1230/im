@@ -8,3 +8,7 @@ redis:
   DB: 0
   poolSize: 100
   minIdleConn: 100
+  dbAddress: 127.0.0.1:16379
+  dbMaxIdle: 128
+  dbIdleTimeout: 120
+  dbPassword: qin1002.
