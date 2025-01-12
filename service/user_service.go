@@ -51,18 +51,20 @@ func CreateUser(c *gin.Context) {
 	})
 }
 
-// FindUserByNameAndPwd
-// @Summary 登录
-// @Tags 用户模块
-// @param name query string true "用户名"
-// @param password query string true "密码"
-// @success 200 {string} json{"code", "message"}
-// @Router /user/findUserByNameAndPwd [get]
+type paramsUserLogin struct {
+	Phone    string `json:"phone"`
+	Password string `json:"password"`
+}
+
 func FindUserByNameAndPwd(c *gin.Context) {
-	name := c.Query("name")
-	pwd := c.Query("password")
-	user := models.FindUserByName(name)
-	flag := utils.ValidPassword(pwd, user.Salt, user.Password)
+	params := paramsUserLogin{}
+	if err := c.BindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": err.Error()})
+		return
+	}
+
+	user := models.FindUserByPhone(params.Phone)
+	flag := utils.ValidPassword(params.Password, user.Salt, user.Password)
 	if !flag {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "用户名或密码不正确",

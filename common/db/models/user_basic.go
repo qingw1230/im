@@ -31,6 +31,13 @@ func FindUserByName(name string) *UserBasic {
 	utils.MySQLDB.Where("name = ?", name).First(&user)
 	return &user
 }
+
+func FindUserByPhone(phone string) *UserBasic {
+	user := UserBasic{}
+	utils.MySQLDB.Where("phone = ?", phone).First(&user)
+	return &user
+}
+
 func FindUserByNameAndPwd(name, pwd string) *UserBasic {
 	user := UserBasic{}
 	utils.MySQLDB.Where("name = ? and password = ?", name, pwd).First(&user)
