@@ -125,8 +125,6 @@ func SendUserMsg(c *gin.Context) {
 func SearchFriends(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))
 	users := models.SearchFriend(uint(userId))
-	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"data": users,
-	})
+
+	utils.RespOKList(c.Writer, users, len(users))
 }

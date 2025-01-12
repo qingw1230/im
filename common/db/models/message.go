@@ -44,7 +44,7 @@ var rw sync.RWMutex
 
 func Chat(writer http.ResponseWriter, request *http.Request) {
 	query := request.URL.Query()
-	id := query.Get("sendID")
+	id := query.Get("userId")
 	sendID, _ := strconv.ParseInt(id, 10, 64)
 	// ReceiveID := query.Get("receiveID")
 	// msgType := query.Get("type")
