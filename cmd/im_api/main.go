@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/qingw1230/im/api"
 	"github.com/qingw1230/im/common/db"
 	"github.com/qingw1230/im/common/utils"
+	"github.com/qingw1230/im/internal/api"
 )
 
 func main() {

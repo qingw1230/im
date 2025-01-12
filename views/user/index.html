@@ -64,8 +64,6 @@
             mui.toast(res.msg)
           } else {
             var url = "//172.23.137.168:8080/toChat?userId=" + res.data.ID + "&token=" + res.data.Identity
-            userInfo(res.data)
-            userId(res.data.ID)
             location.href = url
             mui.toast("登录成功,即将跳转")
           }
