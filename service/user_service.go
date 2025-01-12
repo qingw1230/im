@@ -75,6 +75,7 @@ func UserLogin(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "success",
+			"data":    user,
 		})
 	}
 }

@@ -63,7 +63,8 @@
           if (res.message != "success") {
             mui.toast(res.msg)
           } else {
-            location.replace("//172.23.137.168//demo/index.shtml")
+            var url = "//172.23.137.168:8080/toChat?userId=" + res.data.ID + "&token=" + res.data.Identity
+            location.href = url
             mui.toast("登录成功,即将跳转")
           }
         })
